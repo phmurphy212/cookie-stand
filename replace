@@ -1,0 +1,44 @@
+  function limaCookieFunction() {
+    const limaList = document.getElementById('lima-list');
+    //object literal with the Seattle data
+  function limaCookieFunction() {
+    const limaList = document.getElementById('lima-list');
+    //object literal with the Seattle data
+    let limaStore = {
+      name: 'Paris',
+      min: 23,
+      max: 65,
+      dailyTotal: 0,
+      avgCookiesPerHourArray: [],
+      avg: 6.3,
+      randomCustCount: function () {
+        return Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+      },
+      cookieSales: function () {
+        return Math.ceil(this.avg * this.randomCustCount());
+      },
+      cookiesToArray: function () {
+        for (let i = 0; i < hours.length; i++) {
+          this.avgCookiesPerHourArray.push(this.cookieSales());
+        }
+      },
+      sumOfSales: function () {
+        for (let i = 0; i < this.avgCookiesPerHourArray.length; i++) {
+          this.dailyTotal += this.avgCookiesPerHourArray[i];
+        }
+      },
+      renderToSales: function () {
+        for (let i = 0; i < hours.length; i++) {
+          let li = document.createElement('li');
+          li.textContent = `${hours[i]}: ${this.cookieSales()} cookies`;
+          limaList.appendChild(li);
+        }
+        let liTotal = document.createElement('li');
+        liTotal.textContent = `Total: ${this.dailyTotal} cookies`;
+        limaList.appendChild(liTotal);
+      },
+    };
+    limaStore.cookiesToArray();
+    limaStore.sumOfSales();
+    limaStore.renderToSales();
+  }
