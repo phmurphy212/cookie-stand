@@ -7,9 +7,9 @@ App to track and predict cookie sales, based on analytics and data from past per
 ### Author: Phil Murphy
 
 ### Contributors:
-* 
-* 
-* 
+* Mark Thanadabouth
+* Matt Miguel
+* <could be you!>
 
 
 ### Links and Resources
@@ -17,5 +17,8 @@ App to track and predict cookie sales, based on analytics and data from past per
 * Any Links you used as reference
 
 ### Reflections and Comments
-* Consider including the answers to your daily journal and submission questions here
-* This is also a good place to reflect on the tools and resources used and learned
+* Class06 - Salmon Cookies Part I
+
+I really learned a lot about objects and methods in this lab. It was really fun, and I'm super glad that I got to do it. I also feel like I really got to contribute to the growth of the rest of the class, which makes me happy <3
+
+Hopefully going forward I can continue to feel comfortable with the projects, so that I can help make everyone else's lives easier
