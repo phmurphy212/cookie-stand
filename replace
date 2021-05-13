@@ -9,28 +9,28 @@
       min: 23,
       max: 65,
       dailyTotal: 0,
-      avgCookiesPerHourArray: [],
+      cookiesPerHourArray: [],
       avg: 6.3,
       randomCustCount: function () {
         return Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
       },
-      cookieSales: function () {
+      cookiesPerHour: function () {
         return Math.ceil(this.avg * this.randomCustCount());
       },
       cookiesToArray: function () {
         for (let i = 0; i < hours.length; i++) {
-          this.avgCookiesPerHourArray.push(this.cookieSales());
+          this.cookiesPerHourArray.push(this.cookiesPerHour());
         }
       },
       sumOfSales: function () {
-        for (let i = 0; i < this.avgCookiesPerHourArray.length; i++) {
-          this.dailyTotal += this.avgCookiesPerHourArray[i];
+        for (let i = 0; i < this.cookiesPerHourArray.length; i++) {
+          this.dailyTotal += this.cookiesPerHourArray[i];
         }
       },
       renderToSales: function () {
         for (let i = 0; i < hours.length; i++) {
           let li = document.createElement('li');
-          li.textContent = `${hours[i]}: ${this.cookieSales()} cookies`;
+          li.textContent = `${hours[i]}: ${this.cookiesPerHour()} cookies`;
           limaList.appendChild(li);
         }
         let liTotal = document.createElement('li');
