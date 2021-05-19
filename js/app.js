@@ -7,7 +7,7 @@ const salesHeader = document.getElementById('tHeader');
 const salesFooter = document.getElementById('tFooter');
 let storeDetails = [];
 let totalOfTotals = 0;
-
+let hourAndStoreArray = [];
 //constructor method and expected variables
 function CookieStore(name, min, max, avg) {
   this.name = name;
@@ -19,8 +19,9 @@ function CookieStore(name, min, max, avg) {
   this.dailyTotal = 0;
   this.hourlyTotal = 0;
   this.cookiesPerHourArray = [];
-  this.hourAndStoreArray = [];
+  this.allStoresHourly = 0;
   storeDetails.push(this);
+  hourAndStoreArray.push(this.name);
 }
 
 //solve for customers using random number
@@ -35,25 +36,29 @@ CookieStore.prototype.salesCalculator = function () {
   for (let i = 0; i < hours.length; i ++){
     this.cookiesPerHourArray.push(Math.ceil(this.avg * this.customerCount()));
   }
-  for (let i = 0; i < this.cookiesPerHourArray.length; i++){
-    this.dailyTotal += this.cookiesPerHourArray[i];
+  for (let j = 0; j < this.cookiesPerHourArray.length; j++){
+    this.dailyTotal += this.cookiesPerHourArray[j];
   }
-  for (let i = 1; i < (storeDetails.length); i++){
-    totalOfTotals += storeDetails[i].dailyTotal;
-  }
-  // for (let i = 0; i < storeDetails.length; i++){
-  //   this.hourAndStoreArray.push(storeDetails[i].cookiesPerHourArray);
-  //   for (let j = 1; j < this.hourAndStoreArray.length; j++){
-  //     this.hourlyTotal += this.hourAndStoreArray[j];
-  //   }
+  // for (let k = 1; k < (storeDetails.length); k++){
+  //   totalOfTotals += storeDetails[k].dailyTotal;
   // }
-  // console.log(this.hourAndStoreArray);
 };
+
+// CookieStore.prototype.testingMultiDim = function (){
+//   // console.log(hourAndStoreArray.length);
+//   for (let i = 0; i < hourAndStoreArray.length; i++){
+//     for (let j = 0; j < this.cookiesPerHourArray.length; j++){
+//       this.allStoresHourly += this.cookiesPerHourArray[i];
+//     }
+//   }
+//   console.log(this.allStoresHourly);
+// };
 
 // console.log(storeDetails.cookiesPerHourArray);
 //render the main table data to the sales website
 CookieStore.prototype.renderToSales = function () {
   this.salesCalculator();
+  // this.calcHourlyAllStores();
 
 //create the first column witht the store names
   let tr = document.createElement('tr');
@@ -75,16 +80,16 @@ CookieStore.prototype.renderToSales = function () {
 
 //append all of this data to the table
   salesTable.appendChild(tr);
+
+  // this.testingMultiDim();
 };
 
-// CookieStore.prototype.calcTotalOfTotals = function(){
-  // for (let i = 0; i < storeDetails.length; i++){
-  //   this.totalOfTotals += storeDetails[i].dailyTotal;
-  // }
-  // let tot = document.createElement('td');
-  // tot.textContent = this.totalOfTotals;
-  // salesFooter.appendChild(tot);
+// CookieStore.prototype.calcHourlyAllStores = function(){
+//   for (let i = 1; i < hours.length; i++){
+//     console.log(this.hourAndStoreArray[i][i]);
+//   }
 // };
+
 //instantiate new stores for each of the salmon cookie stores
 new CookieStore('Seattle', 23, 65, 6.3);
 new CookieStore('Tokyo', 3, 24, 1.2);
@@ -137,6 +142,5 @@ function renderInALoop(){
   createFooter();
 }
 renderInALoop();
-// console.log(storeDetails[4].cookiesPerHourArray);
 
 
