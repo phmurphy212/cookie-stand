@@ -6,12 +6,11 @@ const salesTable = document.getElementById('salesTable');
 const salesHeader = document.getElementById('tHeader');
 const salesFooter = document.getElementById('tFooter');
 let storeDetails = [];
-class08-cssUpgrade
+let onlyTotals = [];
+let grandTotal = 0;
 
 
-let totalOfTotals = 0;
-let hourAndStoreArray = [];
-main
+
 //constructor method and expected variables
 function CookieStore(name, min, max, avg) {
   this.name = name;
@@ -21,16 +20,8 @@ function CookieStore(name, min, max, avg) {
 
   //variables to be used within other methods/functions
   this.dailyTotal = 0;
-  this.hourlyTotal = 0;
   this.cookiesPerHourArray = [];
-class08-cssUpgrade
-  this.totalsOnlyArray = [];
-  this.dailyLocationTotal = 0;
-
-  this.allStoresHourly = 0;
- main
   storeDetails.push(this);
-  hourAndStoreArray.push(this.name);
 }
 
 //solve for customers using random number
@@ -41,88 +32,45 @@ CookieStore.prototype.customerCount = function () {
 //calculate total cookies sold and push that number to an array 
 //and calulate the daily total and total of totals
 CookieStore.prototype.salesCalculator = function () {
-  this.customerCount();
   for (let i = 0; i < hours.length; i ++){
     this.cookiesPerHourArray.push(Math.ceil(this.avg * this.customerCount()));
   }
-class08-cssUpgrade
   for (let i = 0; i < this.cookiesPerHourArray.length; i++){
     this.dailyTotal += this.cookiesPerHourArray[i];
   }
-  this.totalsOnlyArray.push(this.dailyTotal);
-};
-
-CookieStore.prototype.sumTotal = function(){
-  this.salesCalculator();
-  this.dailyLocationTotal += this.totalsOnlyArray[0];
-  for (let i = 1; i < storeDetails.length; i++){
-    this.dailyLocationTotal += this.totalsOnlyArray[i];
+  onlyTotals.push(this.dailyTotal);
+  let count = 0;
+  for (let i = 0; i < storeDetails.length; i++){
+    count += onlyTotals[i];
   }
-  console.log(this.dailyLocationTotal);
+  grandTotal = count;
 };
 
 //render the main table data to the sales website
 CookieStore.prototype.renderToSales = function () {
-  // this.salesCalculator();
-  this.sumTotal();
-
-  for (let j = 0; j < this.cookiesPerHourArray.length; j++){
-    this.dailyTotal += this.cookiesPerHourArray[j];
-  }
-  // for (let k = 1; k < (storeDetails.length); k++){
-  //   totalOfTotals += storeDetails[k].dailyTotal;
-  // }
-};
-
-// CookieStore.prototype.testingMultiDim = function (){
-//   // console.log(hourAndStoreArray.length);
-//   for (let i = 0; i < hourAndStoreArray.length; i++){
-//     for (let j = 0; j < this.cookiesPerHourArray.length; j++){
-//       this.allStoresHourly += this.cookiesPerHourArray[i];
-//     }
-//   }
-//   console.log(this.allStoresHourly);
-// };
-
-// console.log(storeDetails.cookiesPerHourArray);
-//render the main table data to the sales website
-CookieStore.prototype.renderToSales = function () {
   this.salesCalculator();
-  // this.calcHourlyAllStores();
-main
 
-//create the first column witht the store names
+  //create the first column witht the store names
   let tr = document.createElement('tr');
   let storeCell = document.createElement('td');
   storeCell.textContent = this.name;
   tr.appendChild(storeCell);
 
-//create the rest of the table from data passed to the array
+  //create the rest of the table from data passed to the array
   for (let i = 0; i < hours.length; i++) {
     let td = document.createElement('td');
     td.textContent = this.cookiesPerHourArray[i];
     tr.appendChild(td);
   }
 
-//create the total column using daily total
+  //create the total column using daily total
   let tdTotal = document.createElement('td');
   tdTotal.textContent = this.dailyTotal;
   tr.appendChild(tdTotal);
 
-//append all of this data to the table
+  //append all of this data to the table
   salesTable.appendChild(tr);
-
-  // this.testingMultiDim();
 };
-
- class08-cssUpgrade
-
-// CookieStore.prototype.calcHourlyAllStores = function(){
-//   for (let i = 1; i < hours.length; i++){
-//     console.log(this.hourAndStoreArray[i][i]);
-//   }
-// };
-main
 
 //instantiate new stores for each of the salmon cookie stores
 new CookieStore('Seattle', 23, 65, 6.3);
@@ -134,8 +82,10 @@ new CookieStore('Lima', 2, 16, 4.6);
 //stand alone function to create the header and shift the array over one index
 //to include the city name field
 function createHeader(){
-  hours.unshift('Store');
 
+  let hourCells = document.createElement('td');
+  hourCells.textContent = 'Store';
+  salesHeader.appendChild(hourCells);
   for (let i = 0; i < hours.length; i++){
     let hourCells = document.createElement('td');
     hourCells.textContent = hours[i];
@@ -148,19 +98,25 @@ function createHeader(){
 
 //stand alone function to create the footer to include the city name field
 function createFooter(){
-
+  let tr = document.createElement('tr');
   let td = document.createElement('td');
   td.textContent = 'Totals';
-  salesFooter.appendChild(td);
+  tr.appendChild(td);
 
-  for (let i = 1; i < hours.length; i++){
-    let storesAdded = document.createElement('td');
-    storesAdded.textContent = 'footer';
-    salesFooter.appendChild(storesAdded);
+  for (let i = 0; i < hours.length; i++){
+    let columnTotal = document.createElement('td');
+    let hourlyTotal = 0;
+    for (let j = 0; j < storeDetails.length; j++){
+      hourlyTotal += storeDetails[j].cookiesPerHourArray[i];
+    }
+    columnTotal.textContent = hourlyTotal;
+    tr.appendChild(columnTotal);
   }
-//   let tot = document.createElement('td');
-//   tot.textContent = totalOfTotals;
-//   salesFooter.appendChild(tot);
+  let tot = document.createElement('td');
+  tot.textContent = grandTotal;
+  tr.appendChild(tot);
+
+  salesFooter.appendChild(tr);
 }
 
 //scalable solution to loop through however many stores end up getting created
