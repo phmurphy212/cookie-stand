@@ -9,11 +9,12 @@ App to track and predict cookie sales, based on analytics and data from past per
 ### Contributors:
 * Mark Thanadabouth
 * Matt Miguel
-* <could be you!>
+* Heather Bidsgard
+
 
 
 ### Links and Resources
-* [submission PR](http://xyz.com)
+* https://freefrontend.com/css-tables/
 * Any Links you used as reference
 
 ### Reflections and Comments
