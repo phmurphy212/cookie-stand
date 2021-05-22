@@ -17,6 +17,31 @@
 </nav>
 </header>
 <main>
+  <section>
+    <form id="newStore">
+      <fieldset>
+        <legend>New Store Info</legend>
+      
+      <label>City
+        <input required type="text" name="city" placeholder="Atlanta">
+      </label>
+
+      <label>Minimum Sales
+        <input required type="number" name="min" step="0.1" placeholder="0.0">
+      </label>
+
+      <label>Maximum Sales
+        <input required type="number" name="max" step="0.1" placeholder="0.0">
+      </label>
+
+      <label>Average Sales
+        <input required type="number" name="avg" step="0.1" placeholder="0.0">
+      </label>
+
+      <button type="submit">Add Store</button>
+      </fieldset>
+    </form>
+  </section>
   <img src="img/family.jpg" alt="family">
   </main>
   <table id ="salesTable">

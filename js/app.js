@@ -4,7 +4,8 @@ const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm','1pm', '2pm', 
 //foothold in the DOM
 const salesTable = document.getElementById('salesTable');
 const salesHeader = document.getElementById('tHeader');
-const salesFooter = document.getElementById('tFooter');
+let newStoreForm = document.getElementById('newStore');
+let footer = document.getElementById('tFooter');
 let storeDetails = [];
 let onlyTotals = [];
 let grandTotal = 0;
@@ -22,6 +23,7 @@ function CookieStore(name, min, max, avg) {
   this.dailyTotal = 0;
   this.cookiesPerHourArray = [];
   storeDetails.push(this);
+  this.renderToSales();
 }
 
 //solve for customers using random number
@@ -29,7 +31,7 @@ CookieStore.prototype.customerCount = function () {
   return Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
 };
 
-//calculate total cookies sold and push that number to an array 
+//calculate total cookies sold and push that number to an array
 //and calulate the daily total and total of totals
 CookieStore.prototype.salesCalculator = function () {
   for (let i = 0; i < hours.length; i ++){
@@ -79,6 +81,7 @@ new CookieStore('Dubai', 11, 38, 3.7);
 new CookieStore('Paris', 20, 38, 2.3);
 new CookieStore('Lima', 2, 16, 4.6);
 
+
 //stand alone function to create the header and shift the array over one index
 //to include the city name field
 function createHeader(){
@@ -99,9 +102,9 @@ function createHeader(){
 //stand alone function to create the footer to include the city name field
 function createFooter(){
   let tr = document.createElement('tr');
-  let td = document.createElement('td');
-  td.textContent = 'Totals';
-  tr.appendChild(td);
+  let tf = document.createElement('td');
+  tf.textContent = 'Totals';
+  tr.appendChild(tf);
 
   for (let i = 0; i < hours.length; i++){
     let columnTotal = document.createElement('td');
@@ -116,18 +119,27 @@ function createFooter(){
   tot.textContent = grandTotal;
   tr.appendChild(tot);
 
-  salesFooter.appendChild(tr);
+  footer.appendChild(tr);
 }
 
-//scalable solution to loop through however many stores end up getting created
+//call create header and footer
+createHeader();
+createFooter();
 
-function renderInALoop(){
-  for (let i = 0; i < storeDetails.length; i++){
-    storeDetails[i].renderToSales();
-  }
-  createHeader();
+//looks for a click on my submit button
+//when the event happens, it instantiates a new store
+//and renders a new footer with correct totals
+function handleSubmit(event){
+  event.preventDefault();
+  let name = event.target.city.value;
+  let min = +event.target.min.value;
+  let max = +event.target.max.value;
+  let avg = +event.target.avg.value;
+  new CookieStore(name, min, max, avg);
+  footer.innerHTML = '';
   createFooter();
 }
-renderInALoop();
 
+//event listener
+newStoreForm.addEventListener('submit', handleSubmit);
 
